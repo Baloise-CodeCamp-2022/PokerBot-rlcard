@@ -10,7 +10,7 @@ class Model(object):
 
     @property
     def agents(self):
-        ''' Get a list of agents for each position in a the game
+        ''' Get a list of agents for each position in the game
 
         Returns:
             agents (list): A list of agents

@@ -1,4 +1,4 @@
-''' UNO rule models
+''' MauMau rule models
 '''
 
 import numpy as np
@@ -32,14 +32,7 @@ class MauMauRuleAgentV1(object):
 
         hand = state['hand']
 
-        # If we have wild-4 simply play it and choose color that appears most in hand
-        for action in legal_actions:
-            if action.split('-')[1] == 'wild_draw_4':
-                color_nums = self.count_colors(self.filter_wild(hand))
-                action = max(color_nums, key=color_nums.get) + '-wild_draw_4'
-                return action
-
-        # Without wild-4, we randomly choose one
+        # we randomly choose one
         action = np.random.choice(self.filter_wild(legal_actions))
         return action
 
@@ -53,14 +46,14 @@ class MauMauRuleAgentV1(object):
         ''' Filter the wild cards. If all are wild cards, we do not filter
 
         Args:
-            hand (list): A list of UNO card string
+            hand (list): A list of MauMau card string
 
         Returns:
-            filtered_hand (list): A filtered list of UNO string
+            filtered_hand (list): A filtered list of MauMau string
         '''
         filtered_hand = []
         for card in hand:
-            if not card[2:6] == 'wild':
+            if not card[1] == 'J':
                 filtered_hand.append(card)
 
         if len(filtered_hand) == 0:
@@ -73,7 +66,7 @@ class MauMauRuleAgentV1(object):
         ''' Count the number of cards in each color in hand
 
         Args:
-            hand (list): A list of UNO card string
+            hand (list): A list of MauMau card string
 
         Returns:
             color_nums (dict): The number cards of each color
@@ -88,20 +81,20 @@ class MauMauRuleAgentV1(object):
         return color_nums
 
 class MauMauRuleModelV1(Model):
-    ''' UNO Rule Model version 1
+    ''' MauMau Rule Model version 1
     '''
 
     def __init__(self):
         ''' Load pretrained model
         '''
-        env = rlcard.make('uno')
+        env = rlcard.make('maumau')
 
         rule_agent = MauMauRuleAgentV1()
         self.rule_agents = [rule_agent for _ in range(env.num_players)]
 
     @property
     def agents(self):
-        ''' Get a list of agents for each position in a the game
+        ''' Get a list of agents for each position in the game
 
         Returns:
             agents (list): A list of agents
@@ -113,7 +106,7 @@ class MauMauRuleModelV1(Model):
 
     @property
     def use_raw(self):
-        ''' Indicate whether use raw state and action
+        ''' Indicate wether use raw state and action
 
         Returns:
             use_raw (boolean): True if using raw state and action

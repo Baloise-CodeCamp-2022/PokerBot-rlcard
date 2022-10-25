@@ -111,6 +111,7 @@ if __name__ == '__main__':
             'uno',
             'gin-rummy',
             'bridge',
+            'maumau'
         ],
     )
     parser.add_argument(

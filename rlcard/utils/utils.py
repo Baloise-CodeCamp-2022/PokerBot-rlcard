@@ -26,7 +26,7 @@ def get_device():
         device = torch.device("cpu")
         print("--> Running on the CPU")
 
-    return device    
+    return device
 
 def init_standard_deck():
     ''' Initialize a standard deck of 52 cards
@@ -36,6 +36,17 @@ def init_standard_deck():
     '''
     suit_list = ['S', 'H', 'D', 'C']
     rank_list = ['A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K']
+    res = [Card(suit, rank) for suit in suit_list for rank in rank_list]
+    return res
+
+def init_32_deck():
+    ''' Initialize a standard deck of 32 cards
+
+    Returns:
+        (list): A list of Card object
+    '''
+    suit_list = ['S', 'H', 'D', 'C']
+    rank_list = ['A', '7', '8', '9', 'T', 'J', 'Q', 'K']
     res = [Card(suit, rank) for suit in suit_list for rank in rank_list]
     return res
 

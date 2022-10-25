@@ -34,6 +34,11 @@ register(
 )
 
 register(
+    env_id='maumau',
+    entry_point='rlcard.envs.maumau:MauMauEnv',
+)
+
+register(
     env_id='mahjong',
     entry_point='rlcard.envs.mahjong:MahjongEnv',
 )

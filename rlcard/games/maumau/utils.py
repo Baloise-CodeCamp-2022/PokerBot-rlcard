@@ -34,7 +34,7 @@ def cards2list(cards):
     '''
     cards_list = []
     for card in cards:
-        cards_list.append(card.__str__())
+        cards_list.append(card.get_index())
     return cards_list
 
 def hand2dict(hand):
@@ -67,8 +67,8 @@ def encode_hand(plane, hand):
     plane[0] = np.ones((4, 8), dtype=int)
     hand = hand2dict(hand)
     for card, count in hand.items():
-        suit = SUIT_MAP[card[1]]
-        rank = RANK_MAP[card[0]]
+        suit = SUIT_MAP[card[0]]
+        rank = RANK_MAP[card[1]]
         if rank == 'J':
             if plane[1][0][rank] == 0:
                 for index in range(4):
@@ -89,7 +89,7 @@ def encode_target(plane, target):
     Returns:
         (array): 1*4*15 numpy array
     '''
-    suit = SUIT_MAP[target[1]]
-    rank = RANK_MAP[target[0]]
+    suit = SUIT_MAP[target[0]]
+    rank = RANK_MAP[target[1]]
     plane[suit][rank] = 1
     return plane

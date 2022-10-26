@@ -3,7 +3,8 @@
 
 import rlcard
 from rlcard import models
-from rlcard.agents.human_agents.uno_human_agent import HumanAgent, _print_action
+from rlcard.utils.utils import print_card
+from rlcard.agents.human_agents.maumau_human_agent import HumanAgent
 
 # Make environment
 env = rlcard.make('maumau')
@@ -32,7 +33,8 @@ while (True):
         _action_list.insert(0, action_record[-i])
     for pair in _action_list:
         print('>> Player', pair[0], 'chooses ', end='')
-        _print_action(pair[1])
+        print('')
+        print_card(pair[1])
         print('')
 
     print('===============     Result     ===============')

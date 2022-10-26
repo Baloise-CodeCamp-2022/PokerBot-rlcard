@@ -33,7 +33,6 @@ class MauMauEnv(Env):
         return extracted_state
 
     def get_payoffs(self):
-
         return np.array(self.game.get_payoffs())
 
     def _decode_action(self, action_id):

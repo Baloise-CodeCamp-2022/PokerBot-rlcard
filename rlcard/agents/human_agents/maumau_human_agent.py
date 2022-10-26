@@ -55,14 +55,14 @@ def _print_state(state, action_record):
         _action_list.insert(0, action_record[-i])
     for pair in _action_list:
         print('>> Player', pair[0], 'chooses ', end='')
-        _print_action(pair[1])
+        print_card(pair[1])
         print('')
 
     print('\n=============== Your Hand ===============')
     print_card(state['hand'])
     print('')
     print('=============== Last Card ===============')
-    print_card(state['target'], wild_color=True)
+    print_card(state['target'])
     print('')
     print('========== Players Card Number ===========')
     for i in range(state['num_players']):
@@ -71,15 +71,8 @@ def _print_state(state, action_record):
     print('======== Actions You Can Choose =========')
     for i, action in enumerate(state['legal_actions']):
         print(str(i)+': ', end='')
-        print_card(action, wild_color=True)
+        print('')
+        print_card(action)
         if i < len(state['legal_actions']) - 1:
             print(', ', end='')
     print('\n')
-
-def _print_action(action):
-    ''' Print out an action in a nice form
-
-    Args:
-        action (str): A string a action
-    '''
-    print_card(action, wild_color=True)

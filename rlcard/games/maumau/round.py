@@ -56,8 +56,8 @@ class MauMauRound:
             self._perform_draw_action(players)
             return None
         player = players[self.current_player]
-        suit = action[1]
-        rank = action[0]
+        suit = action[0]
+        rank = action[1]
         # remove correspongding card
         remove_index = None
         for index, card in enumerate(player.hand):
@@ -85,16 +85,16 @@ class MauMauRound:
         if target.rank == 'J':
             for card in hand:
                 if card.rank == 'J':
-                    legal_actions.append(card.__str__())
+                    legal_actions.append(card.get_index())
                 elif card.suit == target.suit:
-                    legal_actions.append(card.__str__())
+                    legal_actions.append(card.get_index())
         # target is action card or number card
         else:
             for card in hand:
                 if card.rank == 'J':
-                    legal_actions.append(card.__str__())
+                    legal_actions.append(card.get_index())
                 elif card.suit == target.suit or card.rank == target.rank:
-                    legal_actions.append(card.__str__())
+                    legal_actions.append(card.get_index())
         if not legal_actions:
             legal_actions = ['draw']
         return legal_actions
@@ -108,7 +108,7 @@ class MauMauRound:
         state = {}
         player = players[player_id]
         state['hand'] = cards2list(player.hand)
-        state['target'] = self.target.__str__()
+        state['target'] = self.target.get_index()
         state['played_cards'] = cards2list(self.played_cards)
         state['legal_actions'] = self.get_legal_actions(players, player_id)
         state['num_cards'] = []
@@ -141,7 +141,7 @@ class MauMauRound:
             self.current_player = (self.current_player + self.direction) % self.num_players
 
         # draw a card with the same color of target
-        elif card.suit == self.target.suit:
+        elif card.suit == self.target.suit or card.rank == self.target.rank:
             if card.rank in ['7', '8', 'J']:
                 self.played_cards.append(card)
                 self._perform_card_action(players, card)
@@ -150,7 +150,7 @@ class MauMauRound:
                 self.played_cards.append(card)
                 self.current_player = (self.current_player + self.direction) % self.num_players
 
-        # draw a card with the diffrent color of target
+        # draw a card with the different color of target
         else:
             players[self.current_player].hand.append(card)
             self.current_player = (self.current_player + self.direction) % self.num_players
@@ -168,11 +168,7 @@ class MauMauRound:
         elif card.rank == '7':
             if len(self.dealer.deck) < 2:
                 self.replace_deck()
-                #self.is_over = True
-                #self.winner = MauMauJudger.judge_winner(players)
-                #return None
             self.dealer.deal_cards(players[(current + direction) % num_players], 2)
-            current = (current + direction) % num_players
 
         self.current_player = (current + self.direction) % num_players
         self.target = card

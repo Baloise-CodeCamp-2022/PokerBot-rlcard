@@ -76,7 +76,10 @@ def encode_hand(plane, hand):
                     plane[1][index][rank] = 1
         else:
             plane[0][suit][rank] = 0
-            plane[count][suit][rank] = 1
+            if count >= 3:
+                print('war zu gross: ', count)
+            else:
+                plane[count][suit][rank] = 1
     return plane
 
 def encode_target(plane, target):

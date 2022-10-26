@@ -108,6 +108,7 @@ class MauMauRound:
                     legal_actions.append(card.get_index())
         if not legal_actions:
             legal_actions = ['draw']
+        # ??? legal_actions.append('draw')
         return legal_actions
     def get_state(self, players, player_id):
         ''' Get player's state

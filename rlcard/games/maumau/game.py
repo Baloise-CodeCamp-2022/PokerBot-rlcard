@@ -7,6 +7,7 @@ from rlcard.games.maumau import Dealer
 from rlcard.games.maumau import Player
 from rlcard.games.maumau import Round
 
+from rlcard.games.maumau.utils import cards2list
 
 class MauMauGame:
 
@@ -115,8 +116,9 @@ class MauMauGame:
         '''
         winner = self.round.winner
         if winner is not None and len(winner) == 1:
-            self.payoffs[winner[0]] = 1
-            self.payoffs[1 - winner[0]] = -1
+            self.payoffs[winner[0]] = MauMauGame.weight_hand(self.players[1-winner[0]].hand)
+            #print(cards2list(self.players[1-winner[0]].hand) , (-MauMauGame.weight_hand(self.players[1-winner[0]].hand)))
+            self.payoffs[1 - winner[0]] = -MauMauGame.weight_hand(self.players[1-winner[0]].hand)
         return self.payoffs
 
     def get_legal_actions(self):
@@ -160,3 +162,17 @@ class MauMauGame:
             (boolean): True if the game is over
         '''
         return self.round.is_over
+
+    @staticmethod
+    def weight_hand(cards):
+        count = 0
+        for card in cards:
+            if card.rank == '7': count += 7
+            elif card.rank == '8': count += 8
+            elif card.rank == '9': count += 9
+            elif card.rank == 'T': count += 10
+            elif card.rank == 'Q': count += 10
+            elif card.rank == 'K': count += 10
+            elif card.rank == 'A': count += 11
+            elif card.rank == 'J': count += 20
+        return count

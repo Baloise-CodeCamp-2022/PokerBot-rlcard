@@ -1,4 +1,4 @@
-from rlcard.games.maumau.utils import cards2list
+from rlcard.games.maumau.utils import cards2list, WILD
 
 class MauMauRound:
     def __init__(self, dealer, num_players, np_random):
@@ -60,10 +60,16 @@ class MauMauRound:
         rank = action[1]
         # remove correspongding card
         remove_index = None
-        for index, card in enumerate(player.hand):
-            if suit == card.suit and rank == card.rank:
-                remove_index = index
-                break
+        if rank == 'J':
+            for index, card in enumerate(player.hand):
+                if 'J' == card.rank:
+                    remove_index = index
+                    break
+        else:
+            for index, card in enumerate(player.hand):
+                if suit == card.suit and rank == card.rank:
+                    remove_index = index
+                    break
         card = player.hand.pop(remove_index)
 
         if not player.hand:
@@ -82,17 +88,22 @@ class MauMauRound:
         legal_actions = []
         hand = players[player_id].hand
         target = self.target
+        wild_flag = 0
         if target.rank == 'J':
             for card in hand:
                 if card.rank == 'J':
-                    legal_actions.append(card.get_index())
+                    if wild_flag == 0:
+                        wild_flag = 1
+                        legal_actions.extend(WILD)
                 elif card.suit == target.suit:
                     legal_actions.append(card.get_index())
         # target is action card or number card
         else:
             for card in hand:
                 if card.rank == 'J':
-                    legal_actions.append(card.get_index())
+                    if wild_flag == 0:
+                        wild_flag = 1
+                        legal_actions.extend(WILD)
                 elif card.suit == target.suit or card.rank == target.rank:
                     legal_actions.append(card.get_index())
         if not legal_actions:

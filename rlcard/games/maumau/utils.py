@@ -14,7 +14,7 @@ with open(os.path.join(ROOT_PATH, 'games/maumau/jsondata/action_space.json'), 'r
     ACTION_SPACE = json.load(file, object_pairs_hook=OrderedDict)
     ACTION_LIST = list(ACTION_SPACE.keys())
 
-WILD = ['JH', 'JS', 'JD', 'JC']
+WILD = ['HJ', 'SJ', 'DJ', 'CJ']
 
 # a map of color to its index
 SUIT_MAP = {'S': 0, 'C': 1, 'H': 2, 'D': 3}

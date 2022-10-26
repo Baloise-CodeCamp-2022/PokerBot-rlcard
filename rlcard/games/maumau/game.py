@@ -1,3 +1,5 @@
+#  $ rm -rf /home/markus/.local/lib/python3.10/site-packages/rlcard && cp -r ./rlcard/ /home/markus/.local/lib/python3.10/site-packages/ && python ./examples/run_random.py --env maumau
+
 from copy import deepcopy
 import numpy as np
 

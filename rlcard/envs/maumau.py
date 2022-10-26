@@ -18,11 +18,11 @@ class MauMauEnv(Env):
         self.default_game_config = DEFAULT_GAME_CONFIG
         self.game = Game()
         super().__init__(config)
-        self.state_shape = [[4, 4, 15] for _ in range(self.num_players)]
+        self.state_shape = [[4, 4, 8] for _ in range(self.num_players)]
         self.action_shape = [None for _ in range(self.num_players)]
 
     def _extract_state(self, state):
-        obs = np.zeros((4, 4, 15), dtype=int)
+        obs = np.zeros((4, 4, 8), dtype=int)
         encode_hand(obs[:3], state['hand'])
         encode_target(obs[3], state['target'])
         legal_action_id = self._get_legal_actions()

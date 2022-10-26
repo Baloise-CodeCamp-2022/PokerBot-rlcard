@@ -1,8 +1,6 @@
-from rlcard.games.maumau.utils import cards2list, WILD
-
+from rlcard.games.maumau.utils import cards2list
 
 class MauMauRound:
-
     def __init__(self, dealer, num_players, np_random):
         ''' Initialize the round class
 
@@ -29,7 +27,7 @@ class MauMauRound:
         '''
         top = self.dealer.flip_top_card()
         if top.rank == 'J':
-            top.suit = self.np_random.choice(WILD)
+            top.suit = self.np_random.choice(['S', 'C', 'H', 'D'])
         self.target = top
         self.played_cards.append(top)
         return top
@@ -58,21 +56,16 @@ class MauMauRound:
             self._perform_draw_action(players)
             return None
         player = players[self.current_player]
-        suit = action[0]
-        rank = action[1]
+        suit = action[1]
+        rank = action[0]
         # remove correspongding card
         remove_index = None
-        if rank == 'J':
-            for index, card in enumerate(player.hand):
-                if rank == card.rank:
-                    remove_index = index
-                    break
-        else:
-            for index, card in enumerate(player.hand):
-                if suit == card.suit and rank == card.rank:
-                    remove_index = index
-                    break
+        for index, card in enumerate(player.hand):
+            if suit == card.suit and rank == card.rank:
+                remove_index = index
+                break
         card = player.hand.pop(remove_index)
+
         if not player.hand:
             self.is_over = True
             self.winner = [self.current_player]
@@ -86,32 +79,25 @@ class MauMauRound:
             self.target = card
 
     def get_legal_actions(self, players, player_id):
-        wild_flag = 0
         legal_actions = []
         hand = players[player_id].hand
         target = self.target
         if target.rank == 'J':
             for card in hand:
                 if card.rank == 'J':
-                    if wild_flag == 0:
-                        wild_flag = 1
-                        legal_actions.extend(WILD)
+                    legal_actions.append(card.__str__())
                 elif card.suit == target.suit:
-                    legal_actions.append(card.str)
-
+                    legal_actions.append(card.__str__())
         # target is action card or number card
         else:
             for card in hand:
                 if card.rank == 'J':
-                    if wild_flag == 0:
-                        wild_flag = 1
-                        legal_actions.extend(WILD)
+                    legal_actions.append(card.__str__())
                 elif card.suit == target.suit or card.rank == target.rank:
-                    legal_actions.append(card.str)
+                    legal_actions.append(card.__str__())
         if not legal_actions:
-            legal_actions = ['7']
+            legal_actions = ['draw']
         return legal_actions
-
     def get_state(self, players, player_id):
         ''' Get player's state
 
@@ -122,7 +108,7 @@ class MauMauRound:
         state = {}
         player = players[player_id]
         state['hand'] = cards2list(player.hand)
-        state['target'] = self.target.str
+        state['target'] = self.target.__str__()
         state['played_cards'] = cards2list(self.played_cards)
         state['legal_actions'] = self.get_legal_actions(players, player_id)
         state['num_cards'] = []

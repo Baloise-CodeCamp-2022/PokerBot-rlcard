@@ -55,32 +55,20 @@ Zha, Daochen, et al. "RLCard: A Platform for Reinforcement Learning in Card Game
 ```
 
 ## Installation
-Make sure that you have **Python 3.6+** and **pip** installed. We recommend installing the stable version of `rlcard` with `pip`:
+Make sure that you have **Python 3.6+** and **pip** installed. Then set up a 
+virtual environment for the project:
 
-```
-pip3 install rlcard
-```
-The default installation will only include the card environments. To use PyTorch implementation of the training algorithms, run
-```
-pip3 install rlcard[torch]
-```
-If you are in China and the above command is too slow, you can use the mirror provided by Tsinghua University:
-```
-pip3 install rlcard -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-Alternatively, you can clone the latest version with (if you are in China and Github is slow, you can use the mirror in [Gitee](https://gitee.com/daochenzha/rlcard)):
-```
-git clone https://github.com/datamllab/rlcard.git
-```
-or only clone one branch to make it faster:
-```
-git clone -b master --single-branch --depth=1 https://github.com/datamllab/rlcard.git
-```
-Then install with
-```
-cd rlcard
-pip3 install -e .
+```sh
+echo add support for virtual environments:
+python3 -m pip install --user virtualenv
+echo create the virtual environment:
+python3 -m venv env
+echo activate the virtual environment:
+source env/bin/activate
+echo implement, then install new features:
 pip3 install -e .[torch]
+echo use your new features, then leave the environment:
+deactivate
 ```
 
 We also provide [**conda** installation method](https://anaconda.org/toubun/rlcard):

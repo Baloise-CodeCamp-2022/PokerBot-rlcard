@@ -5,14 +5,16 @@ import rlcard
 from rlcard import models
 from rlcard.utils.utils import print_card
 from rlcard.agents.human_agents.maumau_human_agent import HumanAgent
+import torch
 
 # Make environment
 env = rlcard.make('maumau')
 human_agent = HumanAgent(env.num_actions)
-cfr_agent = models.load('maumau-rule-v1').agents[0]
+#cfr_agent = models.load('maumau-rule-v1').agents[0]
+agent = torch.load('/home/markus/Code/PokerBot/PokerBot-rlcard/experiments/maumau_dqn_custom-payoff_result/model.pth', map_location=None)
 env.set_agents([
     human_agent,
-    cfr_agent,
+    agent,
 ])
 
 print(">> MauMau rule model V1")

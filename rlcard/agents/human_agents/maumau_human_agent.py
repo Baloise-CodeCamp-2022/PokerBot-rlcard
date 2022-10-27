@@ -23,7 +23,7 @@ class HumanAgent(object):
         Returns:
             action (int): The action decided by human
         '''
-        print(state['raw_obs'])
+        print("foo", state['raw_obs'])
         _print_state(state['raw_obs'], state['action_record'])
         action = int(input('>> You choose action (integer): '))
         while action < 0 or action >= len(state['legal_actions']):

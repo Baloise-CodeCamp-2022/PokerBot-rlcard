@@ -11,7 +11,7 @@ import torch
 env = rlcard.make('maumau')
 human_agent = HumanAgent(env.num_actions)
 #cfr_agent = models.load('maumau-rule-v1').agents[0]
-agent = torch.load('/home/markus/Code/PokerBot/PokerBot-rlcard/experiments/maumau_dqn_custom-payoff_result/model.pth', map_location=None)
+agent = torch.load('/home/markus/Code/PokerBot/PokerBot-rlcard/examples/tournament/dqn_vs_dmc.pth', map_location=None)
 env.set_agents([
     human_agent,
     agent,
@@ -35,6 +35,7 @@ while (True):
         _action_list.insert(0, action_record[-i])
     for pair in _action_list:
         print('>> Player', pair[0], 'chooses ', end='')
+        print('')
         print('')
         print_card(pair[1])
         print('')

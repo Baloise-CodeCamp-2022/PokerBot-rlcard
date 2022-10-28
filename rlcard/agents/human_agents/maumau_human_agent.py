@@ -1,9 +1,9 @@
+import numpy as np
 from rlcard.utils.utils import print_card
 
 class HumanAgent(object):
     ''' A human agent for MauMau. It can be used to play against trained models
     '''
-
     def __init__(self, num_actions):
         ''' Initilize the human agent
 
@@ -23,7 +23,7 @@ class HumanAgent(object):
         Returns:
             action (int): The action decided by human
         '''
-        print("foo", state['raw_obs'])
+        print(state['raw_obs'])
         _print_state(state['raw_obs'], state['action_record'])
         action = int(input('>> You choose action (integer): '))
         while action < 0 or action >= len(state['legal_actions']):
@@ -69,10 +69,5 @@ def _print_state(state, action_record):
         if i != state['current_player']:
             print('Player {} has {} cards.'.format(i, state['num_cards'][i]))
     print('======== Actions You Can Choose =========')
-    for i, action in enumerate(state['legal_actions']):
-        print(str(i)+': ', end='')
-        print('')
-        print_card(action)
-        if i < len(state['legal_actions']) - 1:
-            print(', ', end='')
-    print('\n')
+    print((" "*13).join([str(i[0]) for i in enumerate(state['legal_actions'])]))
+    print_card(state['legal_actions'])
